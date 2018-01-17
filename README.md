@@ -1,0 +1,47 @@
+# InterDB
+
+## Example
+
+```javascript
+const interdb = require('interdb')
+
+const con = new interdb({
+    namespace: 'Salon',
+    publicKey: 'XXX',
+    privateKey: 'YYY',
+    path: './db'
+})
+
+// Global
+con.connect() // connect client
+con.disconnect() // disconnect client
+con.reload() // reload discovery
+
+// DB
+con.db.set('key', {}) // set key
+con.db.put('key', {}) // put new data in existing key or create it
+con.db.del('key') // delete key
+con.db.find(/all/g) // find value
+con.db.merge('key', {}) // merge values
+
+// Bus
+con.bus.broadcast('event', {}) // broadcast to all connected clients
+con.bus.send('hostname/ip', 'event', {}) // send to specific client
+con.bus.on('event' (hostname, data) => {}) // use event listener to handle recv
+
+// Clients
+con.clients.getAll() // get all connected clients
+con.clients.add({ hostname, publicKey })
+con.clients.on('connect', (hostname) => {}) // handle clients connection
+con.clients.on('disconnect', (hostname) => {}) // handle clients disconnection
+```
+
+## Database structure
+
+```json5
+{
+    lastUpdate: "",
+    data: {},
+    keys: []
+}
+```

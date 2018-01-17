@@ -1,0 +1,28 @@
+{
+  "name": "interdb",
+  "version": "0.0.1",
+  "description": "Shared and discoverable database services",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/keymetrics-envision/interdb.git"
+  },
+  "keywords": [
+    "shared",
+    "db",
+    "database",
+    "discovery"
+  ],
+  "authors": [
+    "ItsJimi",
+    "f-hj"
+  ],
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/keymetrics-envision/interdb/issues"
+  },
+  "homepage": "https://github.com/keymetrics-envision/interdb#readme"
+}

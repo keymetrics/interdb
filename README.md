@@ -1,5 +1,7 @@
 # InterDB
 
+InterDB is a shared database with auto discovery.
+
 ## Example
 
 ```javascript
@@ -13,12 +15,11 @@ const con = new interdb({
 })
 
 // Global
-con.connect() // connect client
-con.disconnect() // disconnect client
+con.start() // connect client
+con.stop() // disconnect client
 con.reload() // reload discovery
 
 // DB
-con.db.set('key', {}) // set key
 con.db.put('key', {}) // put new data in existing key or create it
 con.db.del('key') // delete key
 con.db.find(/all/g) // find value
@@ -42,6 +43,6 @@ con.clients.on('disconnect', (hostname) => {}) // handle clients disconnection
 {
     lastUpdate: "",
     data: {},
-    keys: []
+    keys: {}
 }
 ```

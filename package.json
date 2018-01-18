@@ -24,5 +24,11 @@
   "bugs": {
     "url": "https://github.com/keymetrics-envision/interdb/issues"
   },
-  "homepage": "https://github.com/keymetrics-envision/interdb#readme"
+  "homepage": "https://github.com/keymetrics-envision/interdb#readme",
+  "devDependencies": {
+    "standard": "^10.0.3"
+  },
+  "dependencies": {
+    "discovery-swarm": "^4.4.2"
+  }
 }

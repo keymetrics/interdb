@@ -1,5 +1,7 @@
 # InterDB
 
+InterDB is a shared database with auto discovery.
+
 ## Example
 
 ```javascript

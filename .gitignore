@@ -63,3 +63,4 @@ typings/
 # interdb
 database
 test.db
+test.js

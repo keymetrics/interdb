@@ -9,8 +9,7 @@ const interdb = require('interdb')
 
 const con = new interdb({
     namespace: 'Salon',
-    publicKey: 'XXX',
-    privateKey: 'YYY',
+    password: 'hardcoded-password',
     path: './db'
 })
 
@@ -42,7 +41,6 @@ con.clients.on('disconnect', (hostname) => {}) // handle clients disconnection
 ```json5
 {
     lastUpdate: "",
-    data: {},
-    keys: {}
+    data: {}
 }
 ```

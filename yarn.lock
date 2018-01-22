@@ -1342,9 +1342,9 @@ supports-color@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/supports-color/-/supports-color-2.0.0.tgz#535d045ce6b6363fa40117084629995e9df324c7"
 
-"synapsis@https://github.com/Unitech/synapsis":
+synapsis@^0.4.0:
   version "0.4.0"
-  resolved "https://github.com/Unitech/synapsis#24657c089b50ab88bdc7018f37938b908471d02f"
+  resolved "https://registry.yarnpkg.com/synapsis/-/synapsis-0.4.0.tgz#93357cbde07e7a79b72aedc390b881e01b70eb90"
   dependencies:
     amp "0.3.1"
     amp-message "0.1.1"

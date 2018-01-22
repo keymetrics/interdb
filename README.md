@@ -32,8 +32,8 @@ con.bus.on('event' (hostname, data) => {}) // use event listener to handle recv
 // Clients
 con.clients.getAll() // get all connected clients
 con.clients.add({ hostname, publicKey })
-con.clients.on('connect', (hostname) => {}) // handle clients connection
-con.clients.on('disconnect', (hostname) => {}) // handle clients disconnection
+con.clients.on('connected', (hostname) => {}) // handle clients connection
+con.clients.on('disconnected', (hostname) => {}) // handle clients disconnection
 ```
 
 ## Database structure

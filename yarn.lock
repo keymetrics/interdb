@@ -27,6 +27,16 @@ ajv@^4.7.0:
     co "^4.6.0"
     json-stable-stringify "^1.0.1"
 
+amp-message@0.1.1:
+  version "0.1.1"
+  resolved "https://registry.yarnpkg.com/amp-message/-/amp-message-0.1.1.tgz#96f93f5582366d067585febd0887a0f2edf7b9b2"
+  dependencies:
+    amp "0.3.1"
+
+amp@0.3.1:
+  version "0.3.1"
+  resolved "https://registry.yarnpkg.com/amp/-/amp-0.3.1.tgz#6adf8d58a74f361e82c1fa8d389c079e139fc47d"
+
 ansi-escapes@^1.1.0:
   version "1.4.0"
   resolved "https://registry.yarnpkg.com/ansi-escapes/-/ansi-escapes-1.4.0.tgz#d3a8a83b319aa67793662b13e761c7911422306e"
@@ -206,7 +216,7 @@ debug-log@^1.0.0:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/debug-log/-/debug-log-1.0.1.tgz#2307632d4c04382b8df8a32f70b895046d52745f"
 
-debug@3.1.0, debug@^3.1.0:
+debug@*, debug@3.1.0, debug@^3.1.0:
   version "3.1.0"
   resolved "https://registry.yarnpkg.com/debug/-/debug-3.1.0.tgz#5bb5a0672628b64149566ba16819e61518c67261"
   dependencies:
@@ -266,7 +276,7 @@ discovery-channel@^5.3.0:
     pretty-hash "^1.0.0"
     thunky "^0.1.0"
 
-discovery-swarm@^4.4.2:
+discovery-swarm@*:
   version "4.4.2"
   resolved "https://registry.yarnpkg.com/discovery-swarm/-/discovery-swarm-4.4.2.tgz#5d3160a46019e50e874195765df7d601ee55a813"
   dependencies:
@@ -800,8 +810,8 @@ is-regex@^1.0.4:
     has "^1.0.1"
 
 is-resolvable@^1.0.0:
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/is-resolvable/-/is-resolvable-1.0.1.tgz#acca1cd36dbe44b974b924321555a70ba03b1cf4"
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/is-resolvable/-/is-resolvable-1.1.0.tgz#fb18f87ce1feb925169c9a407c19318a3206ed88"
 
 is-symbol@^1.0.1:
   version "1.0.1"
@@ -1221,8 +1231,8 @@ run-parallel@^1.1.2:
   resolved "https://registry.yarnpkg.com/run-parallel/-/run-parallel-1.1.6.tgz#29003c9a2163e01e2d2dfc90575f2c6c1d61a039"
 
 rusha@^0.8.1:
-  version "0.8.11"
-  resolved "https://registry.yarnpkg.com/rusha/-/rusha-0.8.11.tgz#caa8963b1dbfd229d90626dd3f2a784430d6058d"
+  version "0.8.12"
+  resolved "https://registry.yarnpkg.com/rusha/-/rusha-0.8.12.tgz#5d838ce1fce8b145674ee771eaad5bcb2575e64b"
 
 rx-lite@^3.1.2:
   version "3.1.2"
@@ -1331,6 +1341,15 @@ supports-color@4.4.0:
 supports-color@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/supports-color/-/supports-color-2.0.0.tgz#535d045ce6b6363fa40117084629995e9df324c7"
+
+"synapsis@https://github.com/Unitech/synapsis":
+  version "0.4.0"
+  resolved "https://github.com/Unitech/synapsis#24657c089b50ab88bdc7018f37938b908471d02f"
+  dependencies:
+    amp "0.3.1"
+    amp-message "0.1.1"
+    debug "*"
+    discovery-swarm "*"
 
 table@^3.7.8:
   version "3.8.3"

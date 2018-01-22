@@ -30,7 +30,6 @@
     "standard": "^10.0.3"
   },
   "dependencies": {
-    "discovery-channel": "^5.4.7",
-    "discovery-swarm": "^4.4.2"
+    "synapsis": "https://github.com/Unitech/synapsis"
   }
 }

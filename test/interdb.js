@@ -40,7 +40,7 @@ describe('InterDB', () => {
 
   describe('Start interdb', () => {
     it('Start InterDB', done => {
-      const plan = new Plan(3, done)
+      const plan = new Plan(5, done)
 
       con1.start()
       con2.start()
@@ -49,20 +49,27 @@ describe('InterDB', () => {
       con1.clients.on('ready', () => {
         plan.ok(true)
       })
+
       con2.clients.on('ready', () => {
         plan.ok(true)
       })
+
       con3.clients.on('ready', () => {
         plan.ok(true)
       })
+
+      con1.clients.on('peer:connected', () => {
+        plan.ok(true)
+      });
     })
 
     it('Broadcast to clients', done => {
+
       con1.db.put('test', true, err => {
         assert.equal(err, null)
 
         // con2.
-        console.log(con2.db.get('test'))
+        //console.log(con2.db.get('test'))
         // done()
       })
     })

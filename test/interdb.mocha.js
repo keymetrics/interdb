@@ -18,17 +18,22 @@ describe('InterDB', () => {
     con1 = new InterDB({
       namespace: 'test',
       password: 'hardcoded-password',
-      path: dbPath1
+      path: dbPath1,
+      hostname : 'con1'
     })
+
     con2 = new InterDB({
       namespace: 'test',
       password: 'hardcoded-password',
-      path: dbPath2
+      path: dbPath2,
+      hostname : 'con2'
     })
+
     con3 = new InterDB({
       namespace: 'test',
       password: 'hardcoded-password',
-      path: dbPath3
+      path: dbPath3,
+      hostname : 'con3'
     })
   })
 
@@ -103,7 +108,25 @@ describe('InterDB', () => {
 
   describe('handle disconnection and resyncing', function() {
     it('should disconnect con2', function(done) {
-      con2.stop(done);
+      con1.clients.on('peer:disconnected', function(identity) {
+        assert.equal(identity.name, 'con2');
+        done();
+      })
+
+      con2.stop();
+    });
+
+    it('should delete con2 database', function() {
+      fs.unlinkSync(dbPath2)
+    });
+
+    it('should reconnec con2', function(done) {
+      con1.clients.on('peer:connected', function(identity) {
+        assert.equal(identity.name, 'con2');
+        done();
+      })
+
+      con2.stop();
     });
   });
 

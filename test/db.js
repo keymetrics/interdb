@@ -46,13 +46,13 @@ describe('Database', () => {
     })
 
     it('Push new value in array', done => {
-      db.put('foo', [], err => {
+      db.push('foo', 'bar', err => {
         assert.equal(err, null)
-        assert.equal(Array.isArray(db.get('foo')), true)
+        assert.equal(db.get('foo')[0], 'bar')
 
-        db.push('foo', 'bar', err => {
+        db.push('foo', 'baz', err => {
           assert.equal(err, null)
-          assert.equal(db.get('foo')[0], 'bar')
+          assert.equal(db.get('foo')[1], 'baz')
           done()
         })
       })

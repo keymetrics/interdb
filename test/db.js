@@ -7,14 +7,21 @@ const Database = require('../lib/db')
 
 describe('Database', () => {
   let db
-  const dbPath = './test.db'
+  const interdb = {
+    conf: {
+      path: './test.db'
+    },
+    clients: {
+      broadcast: () => {}
+    }
+  }
 
   before(() => {
-    db = new Database(dbPath)
+    db = new Database(interdb)
   })
 
   after(() => {
-    fs.unlinkSync(dbPath)
+    fs.unlinkSync(interdb.conf.path)
   })
 
   describe('Data', () => {
@@ -35,6 +42,19 @@ describe('Database', () => {
         assert.equal(err, null)
         assert.equal(db.get('foo'), undefined)
         done()
+      })
+    })
+
+    it('Push new value in array', done => {
+      db.put('foo', [], err => {
+        assert.equal(err, null)
+        assert.equal(Array.isArray(db.get('foo')), true)
+
+        db.push('foo', 'bar', err => {
+          assert.equal(err, null)
+          assert.equal(db.get('foo')[0], 'bar')
+          done()
+        })
       })
     })
   })

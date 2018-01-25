@@ -19,7 +19,8 @@ con.stop() // disconnect client
 con.reload() // reload discovery
 
 // DB
-con.db.put('key', {}, cb) // put new data in existing key or create it
+con.db.put('key', 'value', cb) // put new data in existing key or create it
+con.db.push('key', 'value', cb) // push data in existing key if it's an array
 con.db.del('key', cb) // delete key
 con.db.get('key') // get value from key
 con.db.updateAll({ data: {} }, cb) // Overwrite database

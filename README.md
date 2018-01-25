@@ -19,10 +19,11 @@ con.stop() // disconnect client
 con.reload() // reload discovery
 
 // DB
-con.db.put('key', {}) // put new data in existing key or create it
-con.db.del('key') // delete key
-con.db.find(/all/g) // find value
-con.db.merge('key', {}) // merge values
+con.db.put('key', {}, cb) // put new data in existing key or create it
+con.db.del('key', cb) // delete key
+con.db.get('key') // get value from key
+con.db.updateAll({ data: {} }, cb) // Overwrite database
+con.db.getLastUpdate() // Get timestamp of latest action
 
 // Bus
 con.bus.broadcast('event', {}) // broadcast to all connected clients

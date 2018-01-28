@@ -8,15 +8,21 @@ InterDB is a shared database with auto discovery.
 const interdb = require('interdb')
 
 const con = new interdb({
-    namespace: 'Salon',
-    password: 'hardcoded-password',
-    path: './db'
+    namespace: 'business',
+    password: 'long-password',
+    path: './path.db',
+    identity : {
+      // Info that will be shared to other dashboards
+    }
 })
 
 // Global
-con.start() // connect client
-con.stop() // disconnect client
-con.reload() // reload discovery
+con.start() // join network
+con.stop() // exit network
+
+// Bus
+con.clients.*
+// Refer to Synapsis documentation (https://github.com/Unitech/synapsis)
 
 // DB
 con.db.put('key', 'value', cb) // put new data in existing key or create it
@@ -26,16 +32,7 @@ con.db.get('key') // get value from key
 con.db.updateAll({ data: {} }, cb) // Overwrite database
 con.db.getLastUpdate() // Get timestamp of latest action
 
-// Bus
-con.bus.broadcast('event', {}) // broadcast to all connected clients
-con.bus.send('hostname/ip', 'event', {}) // send to specific client
-con.bus.on('event' (hostname, data) => {}) // use event listener to handle recv
 
-// Clients
-con.clients.getAll() // get all connected clients
-con.clients.add({ hostname, publicKey })
-con.clients.on('connected', (hostname) => {}) // handle clients connection
-con.clients.on('disconnected', (hostname) => {}) // handle clients disconnection
 ```
 
 ## Database structure

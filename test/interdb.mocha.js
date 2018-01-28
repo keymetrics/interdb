@@ -19,21 +19,21 @@ describe('InterDB', () => {
       namespace: 'test',
       password: 'hardcoded-password',
       path: dbPath1,
-      hostname : 'con1'
+      identity : 'con1'
     })
 
     con2 = new InterDB({
       namespace: 'test',
       password: 'hardcoded-password',
       path: dbPath2,
-      hostname : 'con2'
+      identity : 'con2'
     })
 
     con3 = new InterDB({
       namespace: 'test',
       password: 'hardcoded-password',
       path: dbPath3,
-      hostname : 'con3'
+      identity : 'con3'
     })
   })
 

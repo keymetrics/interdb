@@ -19,21 +19,21 @@ describe('InterDB', () => {
       namespace: 'test',
       password: 'hardcoded-password',
       path: dbPath1,
-      identity : 'con1'
+      identity: 'con1'
     })
 
     con2 = new InterDB({
       namespace: 'test',
       password: 'hardcoded-password',
       path: dbPath2,
-      identity : 'con2'
+      identity: 'con2'
     })
 
     con3 = new InterDB({
       namespace: 'test',
       password: 'hardcoded-password',
       path: dbPath3,
-      identity : 'con3'
+      identity: 'con3'
     })
   })
 
@@ -67,22 +67,21 @@ describe('InterDB', () => {
     })
   })
 
-
   describe('handle broadcast data', () => {
     it('should node1 put data and other node be synced with right data', done => {
       const plan = new Plan(2, done)
 
-      con1.db.put('test', { test : { truc : 'bidule' } }, err => {
+      con1.db.put('test', { test: { truc: 'bidule' } }, err => {
         assert.equal(err, null)
       })
 
       con2.once('interdb:db:refreshed', () => {
-        assert.deepEqual(con2.db.get('test'), { test : { truc : 'bidule' } });
+        assert.deepEqual(con2.db.get('test'), { test: { truc: 'bidule' } })
         plan.ok(true)
       })
 
       con3.once('interdb:db:refreshed', () => {
-        assert.deepEqual(con3.db.get('test'), { test : { truc : 'bidule' } });
+        assert.deepEqual(con3.db.get('test'), { test: { truc: 'bidule' } })
         plan.ok(true)
       })
     })
@@ -95,39 +94,38 @@ describe('InterDB', () => {
       })
 
       con2.once('interdb:db:refreshed', () => {
-        assert.equal(con2.db.get('test'), undefined);
+        assert.equal(con2.db.get('test'), undefined)
         plan.ok(true)
       })
 
       con3.once('interdb:db:refreshed', () => {
-        assert.equal(con3.db.get('test'), undefined);
+        assert.equal(con3.db.get('test'), undefined)
         plan.ok(true)
       })
     })
   })
 
-  describe.skip('handle disconnection and resyncing', function() {
-    it('should disconnect con2', function(done) {
-      con1.clients.on('peer:disconnected', function(identity) {
-        assert.equal(identity.name, 'con2');
-        done();
+  describe.skip('handle disconnection and resyncing', function () {
+    it('should disconnect con2', function (done) {
+      con1.clients.on('peer:disconnected', function (identity) {
+        assert.equal(identity.name, 'con2')
+        done()
       })
 
-      con2.stop();
-    });
+      con2.stop()
+    })
 
-    it('should delete con2 database', function() {
+    it('should delete con2 database', function () {
       fs.unlinkSync(dbPath2)
-    });
+    })
 
-    it('should reconnec con2', function(done) {
-      con1.clients.on('peer:connected', function(identity) {
-        assert.equal(identity.name, 'con2');
-        done();
+    it('should reconnec con2', function (done) {
+      con1.clients.on('peer:connected', function (identity) {
+        assert.equal(identity.name, 'con2')
+        done()
       })
 
-      con2.stop();
-    });
-  });
-
+      con2.stop()
+    })
+  })
 })

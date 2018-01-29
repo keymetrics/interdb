@@ -1342,6 +1342,15 @@ supports-color@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/supports-color/-/supports-color-2.0.0.tgz#535d045ce6b6363fa40117084629995e9df324c7"
 
+synapsis@latest:
+  version "0.5.0"
+  resolved "https://registry.yarnpkg.com/synapsis/-/synapsis-0.5.0.tgz#42cbc00fb82e9d2115c6c4b2d0b2f4ae81494da7"
+  dependencies:
+    amp "0.3.1"
+    amp-message "0.1.1"
+    debug "*"
+    discovery-swarm "*"
+
 table@^3.7.8:
   version "3.8.3"
   resolved "https://registry.yarnpkg.com/table/-/table-3.8.3.tgz#2bbc542f0fda9861a755d3947fefd8b3f513855f"

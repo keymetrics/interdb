@@ -1,6 +1,4 @@
-
-
-var assert = require('assert');
+var assert = require('assert')
 
 /**
  * Description
@@ -9,9 +7,9 @@ var assert = require('assert');
  * @param {} done
  * @return
  */
-function Plan(count, done) {
-  this.done = done;
-  this.count = count;
+function Plan (count, done) {
+  this.done = done
+  this.count = count
 }
 
 /**
@@ -20,18 +18,18 @@ function Plan(count, done) {
  * @param {} expression
  * @return
  */
-Plan.prototype.ok = function(expression) {
-  assert(expression);
+Plan.prototype.ok = function (expression) {
+  assert(expression)
 
   if (this.count === 0) {
-    assert(false, 'Too many assertions called');
+    assert(false, 'Too many assertions called')
   } else {
-    this.count--;
+    this.count--
   }
 
   if (this.count === 0) {
-    this.done();
+    this.done()
   }
-};
+}
 
-module.exports = Plan;
+module.exports = Plan

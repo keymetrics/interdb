@@ -30,7 +30,7 @@
     "standard": "^10.0.3"
   },
   "dependencies": {
-    "synapsis": "latest",
-    "debug": "*"
+    "debug": "*",
+    "synapsis": "^0.6.0"
   }
 }

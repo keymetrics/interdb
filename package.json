@@ -1,10 +1,10 @@
 {
   "name": "@keymetrics/interdb",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "Shared and discoverable database services",
   "main": "index.js",
   "scripts": {
-    "test": "./node_modules/.bin/mocha test/*.mocha.js  --exit"
+    "test": "./node_modules/.bin/mocha test/*.mocha.js --exit --timeout 3000"
   },
   "repository": {
     "type": "git",

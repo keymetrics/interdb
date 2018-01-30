@@ -33,20 +33,20 @@ describe('InterDB', () => {
       }
     })
 
-    // con3 = new InterDB({
-    //   namespace: 'test',
-    //   password: 'hardcoded-password',
-    //   path: dbPath3,
-    //   identity: {
-    //     hostname: 'con3'
-    //   }
-    // })
+    con3 = new InterDB({
+      namespace: 'test',
+      password: 'hardcoded-password',
+      path: dbPath3,
+      identity: {
+        hostname: 'con3'
+      }
+    })
   })
 
   after(() => {
     fs.unlinkSync(dbPath1)
     fs.unlinkSync(dbPath2)
-    // fs.unlinkSync(dbPath3)
+    fs.unlinkSync(dbPath3)
   })
 
   it('Start con1', done => {
@@ -67,6 +67,43 @@ describe('InterDB', () => {
     con2.once('ready', () => {
       assert.equal(con2.db.get('key'), 'value')
       done()
+    })
+  })
+
+  it('con2 put data and con1 sync data', done => {
+    con2.db.put('test', true, err => {
+      assert.equal(err, null)
+      con1.once('interdb:db:refreshed', () => {
+        assert.equal(con1.db.get('test'), true)
+        done()
+      })
+    })
+  })
+
+  it('con3 sync it database', done => {
+    con3.start()
+
+    con3.once('ready', () => {
+      assert.equal(con3.db.get('key'), 'value')
+      assert.equal(con3.db.get('test'), true)
+      done()
+    })
+  })
+
+  it('con3 put data and con1 and con2 sync data', done => {
+    const plan = new Plan(2, done)
+
+    con3.db.put('count', 2, err => {
+      assert.equal(err, null)
+
+      con1.once('interdb:db:refreshed', () => {
+        assert.equal(con1.db.get('count'), 2)
+        plan.ok(true)
+      })
+      con2.once('interdb:db:refreshed', () => {
+        assert.equal(con2.db.get('count'), 2)
+        plan.ok(true)
+      })
     })
   })
 })

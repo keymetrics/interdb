@@ -49,10 +49,17 @@ describe('Sync', () => {
     })
   })
 
-  after(() => {
-    con1.stop()
-    con2.stop()
-    con3.stop()
+  after(done => {
+    const plan = new Plan(3, done)
+    con1.stop(() => {
+      plan.ok(true)
+    })
+    con2.stop(() => {
+      plan.ok(true)
+    })
+    con3.stop(() => {
+      plan.ok(true)
+    })
     fs.unlinkSync(dbPath1)
     fs.unlinkSync(dbPath2)
     fs.unlinkSync(dbPath3)
@@ -126,15 +133,15 @@ describe('Sync', () => {
   })
 
   it('con 3 stop and resync', done => {
-    con3.stop()
+    con3.stop(() => {
+      con1.db.put('bla', 'bla', () => {
+        con3.start()
 
-    con1.db.put('bla', 'bla', () => {
-      con3.start()
-
-      con3.once('ready', () => {
-        con3.once('synced', () => {
-          assert.equel(con3.db.get('bla'), 'bla')
-          done()
+        con3.once('ready', () => {
+          con3.once('synced', () => {
+            assert.equal(con3.db.get('bla'), 'bla')
+            done()
+          })
         })
       })
     })

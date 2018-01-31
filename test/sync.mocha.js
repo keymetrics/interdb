@@ -15,6 +15,12 @@ describe('Sync', () => {
   const dbPath3 = './database3'
 
   before(() => {
+    try {
+      fs.unlinkSync(dbPath1)
+      fs.unlinkSync(dbPath2)
+      fs.unlinkSync(dbPath3)
+    } catch(e) {}
+
     con1 = new InterDB({
       namespace: 'test',
       password: 'hardcoded-password',

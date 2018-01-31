@@ -38,6 +38,9 @@ describe('InterDB', () => {
   })
 
   after(() => {
+    con1.stop()
+    con2.stop()
+    con3.stop()
     fs.unlinkSync(dbPath1)
     fs.unlinkSync(dbPath2)
     fs.unlinkSync(dbPath3)

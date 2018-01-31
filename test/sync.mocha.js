@@ -19,7 +19,7 @@ describe('Sync', () => {
       fs.unlinkSync(dbPath1)
       fs.unlinkSync(dbPath2)
       fs.unlinkSync(dbPath3)
-    } catch(e) {}
+    } catch (e) {}
 
     con1 = new InterDB({
       namespace: 'test',
@@ -140,6 +140,21 @@ describe('Sync', () => {
         con3.once('ready', () => {
           con3.once('synced', () => {
             assert.equal(con3.db.get('bla'), 'bla')
+            done()
+          })
+        })
+      })
+    })
+  })
+
+  it('con 2 stop and resync with 2M data', done => {
+    con2.stop(() => {
+      con1.db.put('2M', Buffer.alloc(2000000), () => {
+        con2.start()
+
+        con2.once('ready', () => {
+          con2.once('synced', () => {
+            assert.equal(con1.db.getShaSum(), con2.db.getShaSum())
             done()
           })
         })

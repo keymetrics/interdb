@@ -1,6 +1,6 @@
 {
   "name": "@keymetrics/interdb",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "description": "Shared and discoverable database services",
   "main": "index.js",
   "scripts": {

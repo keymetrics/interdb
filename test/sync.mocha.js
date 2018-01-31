@@ -124,4 +124,19 @@ describe('Sync', () => {
       })
     })
   })
+
+  it('con 3 stop and resync', done => {
+    con3.stop()
+
+    con1.db.put('bla', 'bla', () => {
+      con3.start()
+
+      con3.once('ready', () => {
+        con3.once('synced', () => {
+          assert.equel(con3.db.get('bla'), 'bla')
+          done()
+        })
+      })
+    })
+  })
 })

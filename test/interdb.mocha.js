@@ -75,12 +75,12 @@ describe('InterDB', () => {
         assert.equal(err, null)
       })
 
-      con2.once('interdb:db:refreshed', () => {
+      con2.once('refreshed', () => {
         assert.deepEqual(con2.db.get('test'), { test: { truc: 'bidule' } })
         plan.ok(true)
       })
 
-      con3.once('interdb:db:refreshed', () => {
+      con3.once('refreshed', () => {
         assert.deepEqual(con3.db.get('test'), { test: { truc: 'bidule' } })
         plan.ok(true)
       })
@@ -93,12 +93,12 @@ describe('InterDB', () => {
         assert.equal(err, null)
       })
 
-      con2.once('interdb:db:refreshed', () => {
+      con2.once('refreshed', () => {
         assert.equal(con2.db.get('test'), undefined)
         plan.ok(true)
       })
 
-      con3.once('interdb:db:refreshed', () => {
+      con3.once('refreshed', () => {
         assert.equal(con3.db.get('test'), undefined)
         plan.ok(true)
       })

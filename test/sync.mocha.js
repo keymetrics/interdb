@@ -78,7 +78,7 @@ describe('InterDB', () => {
   it('con2 put data and con1 sync data', done => {
     con2.db.put('test', true, err => {
       assert.equal(err, null)
-      con1.once('interdb:db:refreshed', () => {
+      con1.once('refreshed', () => {
         assert.equal(con1.db.get('test'), true)
         done()
       })
@@ -108,11 +108,11 @@ describe('InterDB', () => {
     con3.db.put('count', 2, err => {
       assert.equal(err, null)
 
-      con1.once('interdb:db:refreshed', () => {
+      con1.once('refreshed', () => {
         assert.equal(con1.db.get('count'), 2)
         plan.ok(true)
       })
-      con2.once('interdb:db:refreshed', () => {
+      con2.once('refreshed', () => {
         assert.equal(con2.db.get('count'), 2)
         plan.ok(true)
       })

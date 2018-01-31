@@ -1,6 +1,9 @@
+/**
+ * Events constants
+ */
 
 module.exports = {
-  UPDATE_DATABASE: 'interdb:command:updateDb',
-  SYNC_DATABASE: 'interdb:command:sync',
-  LASTUPDATE_DATABASE: 'interdb:command:lastUpdate'
+  DB_UPDATE: 'interdb:db:update',
+  DB_SYNC: 'interdb:db:sync',
+  DB_LASTUPDATE: 'interdb:db:lastUpdate'
 }

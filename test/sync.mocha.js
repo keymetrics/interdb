@@ -154,7 +154,7 @@ describe('Sync', () => {
 
         con2.once('ready', () => {
           con2.once('synced', () => {
-            assert.equal(con1.db.getShaSum(), con2.db.getShaSum())
+            assert.equal(con2.db.getShaSum(), con1.db.getShaSum())
             done()
           })
         })

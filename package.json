@@ -31,6 +31,6 @@
   },
   "dependencies": {
     "debug": "*",
-    "synapsis": "^0.6.0"
+    "synapsis": "^0.6.1"
   }
 }

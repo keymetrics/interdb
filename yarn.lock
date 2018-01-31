@@ -1342,9 +1342,9 @@ supports-color@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/supports-color/-/supports-color-2.0.0.tgz#535d045ce6b6363fa40117084629995e9df324c7"
 
-synapsis@^0.6.0:
-  version "0.6.0"
-  resolved "https://registry.yarnpkg.com/synapsis/-/synapsis-0.6.0.tgz#a9de93bf4196ebfcccde4cc912b2b5edf1b61ad2"
+synapsis@^0.6.1:
+  version "0.6.1"
+  resolved "https://registry.yarnpkg.com/synapsis/-/synapsis-0.6.1.tgz#e9d1d6668d6017bd2c5cf5f6b8a4eea78deed013"
   dependencies:
     amp "0.3.1"
     amp-message "0.1.1"

@@ -115,12 +115,10 @@ describe('Sync', () => {
       assert.equal(err, null)
 
       con1.once('refreshed', () => {
-        console.log('REFRESHED CON 1')
         assert.equal(con1.db.get('count'), 2)
         plan.ok(true)
       })
       con2.once('refreshed', () => {
-        console.log('REFRESHED CON 2')
         assert.equal(con2.db.get('count'), 2)
         plan.ok(true)
       })

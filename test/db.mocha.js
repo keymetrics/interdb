@@ -7,21 +7,14 @@ const Database = require('../lib/db')
 
 describe('Database', () => {
   let db
-  const interdb = {
-    conf: {
-      path: './test.db'
-    },
-    clients: {
-      broadcast: () => {}
-    }
-  }
+  const path = './test.db'
 
   before(() => {
-    db = new Database(interdb)
+    db = new Database(path)
   })
 
   after(() => {
-    fs.unlinkSync(interdb.conf.path)
+    fs.unlinkSync(path)
   })
 
   describe('Data', () => {

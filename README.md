@@ -11,6 +11,7 @@ const con = new interdb({
     namespace: 'business',
     password: 'long-password',
     path: './path.db',
+    localPath: './path.local.db',
     identity : {
       // Info that will be shared to other dashboards
     }
@@ -24,15 +25,21 @@ con.stop() // exit network
 con.clients.*
 // Refer to Synapsis documentation (https://github.com/Unitech/synapsis)
 
-// DB
+// local DB
+con.localDb.put('key', 'value', cb) // put new data in existing key or create it
+con.localDb.push('key', 'value', cb) // push data in existing key if it's an array or create an array with value in first index
+con.localDb.del('key', cb) // delete key
+con.localDb.get('key') // get value from key
+con.localDb.updateAll({ data: {} }, cb) // Overwrite database
+con.localDb.getLastUpdate() // Get timestamp of latest action
+
+// Shared DB (all of local API but broadcast changes over network)
 con.db.put('key', 'value', cb) // put new data in existing key or create it
 con.db.push('key', 'value', cb) // push data in existing key if it's an array or create an array with value in first index
 con.db.del('key', cb) // delete key
 con.db.get('key') // get value from key
 con.db.updateAll({ data: {} }, cb) // Overwrite database
 con.db.getLastUpdate() // Get timestamp of latest action
-
-
 ```
 
 ## Database structure

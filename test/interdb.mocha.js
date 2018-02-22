@@ -19,6 +19,7 @@ describe('InterDB', () => {
       namespace: 'test',
       password: 'hardcoded-password',
       path: dbPath1,
+      localPath: `${dbPath1}.local`,
       identity: 'con1'
     })
 
@@ -42,6 +43,7 @@ describe('InterDB', () => {
     con2.stop()
     con3.stop()
     fs.unlinkSync(dbPath1)
+    fs.unlinkSync(`${dbPath1}.local`)
     fs.unlinkSync(dbPath2)
     fs.unlinkSync(dbPath3)
   })
@@ -67,6 +69,14 @@ describe('InterDB', () => {
 
     con1.clients.on('peer:connected', () => {
       plan.ok(true)
+    })
+  })
+
+  describe('Check local DB', () => {
+    it('local db exist', () => {
+      assert.notEqual(con1.localDb, undefined)
+      assert.equal(con2.localDb, undefined)
+      assert.equal(con3.localDb, undefined)
     })
   })
 

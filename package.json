@@ -1,5 +1,5 @@
 {
-  "name": "@keymetrics/interdb",
+  "name": "interdb",
   "version": "0.1.0",
   "description": "Shared and discoverable database services",
   "main": "index.js",

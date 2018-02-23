@@ -32,6 +32,7 @@ con.localDb.del('key', cb) // delete key
 con.localDb.get('key') // get value from key
 con.localDb.updateAll({ data: {} }, cb) // Overwrite database
 con.localDb.getLastUpdate() // Get timestamp of latest action
+con.localDb.save(cb) // save changes (use if you modify con.localDb without API)
 
 // Shared DB (all of local API but broadcast changes over network)
 con.db.put('key', 'value', cb) // put new data in existing key or create it
@@ -40,6 +41,7 @@ con.db.del('key', cb) // delete key
 con.db.get('key') // get value from key
 con.db.updateAll({ data: {} }, cb) // Overwrite database
 con.db.getLastUpdate() // Get timestamp of latest action
+con.db.save(cb) // save changes (use if you modify con.db without API)
 ```
 
 ## Database structure

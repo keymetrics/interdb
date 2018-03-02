@@ -15,27 +15,9 @@ describe('InterDB', () => {
   const dbPath3 = './database3'
 
   before(() => {
-    con1 = new InterDB({
-      namespace: 'test',
-      password: 'hardcoded-password',
-      path: dbPath1,
-      localPath: `${dbPath1}.local`,
-      identity: 'con1'
-    })
-
-    con2 = new InterDB({
-      namespace: 'test',
-      password: 'hardcoded-password',
-      path: dbPath2,
-      identity: 'con2'
-    })
-
-    con3 = new InterDB({
-      namespace: 'test',
-      password: 'hardcoded-password',
-      path: dbPath3,
-      identity: 'con3'
-    })
+    con1 = new InterDB()
+    con2 = new InterDB()
+    con3 = new InterDB()
   })
 
   after(() => {
@@ -51,9 +33,25 @@ describe('InterDB', () => {
   it('Start InterDB', done => {
     const plan = new Plan(5, done)
 
-    con1.start()
-    con2.start()
-    con3.start()
+    con1.start({
+      namespace: 'test',
+      password: 'hardcoded-password',
+      path: dbPath1,
+      localPath: `${dbPath1}.local`,
+      identity: 'con1'
+    })
+    con2.start({
+      namespace: 'test',
+      password: 'hardcoded-password',
+      path: dbPath2,
+      identity: 'con2'
+    })
+    con3.start({
+      namespace: 'test',
+      password: 'hardcoded-password',
+      path: dbPath3,
+      identity: 'con3'
+    })
 
     con1.clients.on('ready', () => {
       plan.ok(true)

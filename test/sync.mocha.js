@@ -21,32 +21,9 @@ describe('Sync', () => {
       fs.unlinkSync(dbPath3)
     } catch (e) {}
 
-    con1 = new InterDB({
-      namespace: 'test',
-      password: 'hardcoded-password',
-      path: dbPath1,
-      identity: {
-        hostname: 'con1'
-      }
-    })
-
-    con2 = new InterDB({
-      namespace: 'test',
-      password: 'hardcoded-password',
-      path: dbPath2,
-      identity: {
-        hostname: 'con2'
-      }
-    })
-
-    con3 = new InterDB({
-      namespace: 'test',
-      password: 'hardcoded-password',
-      path: dbPath3,
-      identity: {
-        hostname: 'con3'
-      }
-    })
+    con1 = new InterDB()
+    con2 = new InterDB()
+    con3 = new InterDB()
   })
 
   after(done => {
@@ -66,7 +43,14 @@ describe('Sync', () => {
   })
 
   it('Start con1', done => {
-    con1.start()
+    con1.start({
+      namespace: 'test',
+      password: 'hardcoded-password',
+      path: dbPath1,
+      identity: {
+        hostname: 'con1'
+      }
+    })
 
     con1.once('ready', () => {
       con1.db.put('key', 'value', err => {
@@ -78,7 +62,14 @@ describe('Sync', () => {
   })
 
   it('con2 sync it database with con1', done => {
-    con2.start()
+    con2.start({
+      namespace: 'test',
+      password: 'hardcoded-password',
+      path: dbPath2,
+      identity: {
+        hostname: 'con2'
+      }
+    })
 
     con2.once('ready', () => {
       con2.once('synced', () => {
@@ -100,7 +91,14 @@ describe('Sync', () => {
 
   it('con3 sync it database', done => {
     const plan = new Plan(3, done)
-    con3.start()
+    con3.start({
+      namespace: 'test',
+      password: 'hardcoded-password',
+      path: dbPath3,
+      identity: {
+        hostname: 'con3'
+      }
+    })
 
     con3.once('ready', () => {
       con3.once('synced', () => {
@@ -135,7 +133,14 @@ describe('Sync', () => {
   it('con 3 stop and resync', done => {
     con3.stop(() => {
       con1.db.put('bla', 'bla', () => {
-        con3.start()
+        con3.start({
+          namespace: 'test',
+          password: 'hardcoded-password',
+          path: dbPath3,
+          identity: {
+            hostname: 'con3'
+          }
+        })
 
         con3.once('ready', () => {
           con3.once('synced', () => {
@@ -150,7 +155,14 @@ describe('Sync', () => {
   it('con 2 stop and resync with 2M data', done => {
     con2.stop(() => {
       con1.db.put('2M', Buffer.alloc(2000000), () => {
-        con2.start()
+        con2.start({
+          namespace: 'test',
+          password: 'hardcoded-password',
+          path: dbPath2,
+          identity: {
+            hostname: 'con2'
+          }
+        })
 
         con2.once('ready', () => {
           con2.once('synced', () => {

@@ -7,18 +7,19 @@ InterDB is a shared database with auto discovery.
 ```javascript
 const interdb = require('interdb')
 
-const con = new interdb({
+const con = new interdb()
+
+// Global
+con.startLocal('./path.local.db') // Start local db only
+con.start({
     namespace: 'business',
     password: 'long-password',
     path: './path.db',
-    localPath: './path.local.db',
+    localPath: './path.local.db', // optional
     identity : {
       // Info that will be shared to other dashboards
     }
-})
-
-// Global
-con.start() // join network
+}) // join network
 con.stop() // exit network
 
 // Bus

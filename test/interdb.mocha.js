@@ -24,6 +24,9 @@ describe('InterDB', () => {
     con1.stop()
     con2.stop()
     con3.stop()
+  })
+
+  after(() => {
     fs.unlinkSync(dbPath1)
     fs.unlinkSync(`${dbPath1}.local`)
     fs.unlinkSync(dbPath2)
@@ -53,15 +56,15 @@ describe('InterDB', () => {
       identity: 'con3'
     })
 
-    con1.clients.on('ready', () => {
+    con1.once('ready', () => {
       plan.ok(true)
     })
 
-    con2.clients.on('ready', () => {
+    con2.once('ready', () => {
       plan.ok(true)
     })
 
-    con3.clients.on('ready', () => {
+    con3.once('ready', () => {
       plan.ok(true)
     })
 
@@ -116,10 +119,13 @@ describe('InterDB', () => {
     })
   })
 
-  describe.skip('handle disconnection and resyncing', function () {
+  describe('handle disconnection and resyncing', function () {
     it('should disconnect con2', function (done) {
-      con1.clients.on('peer:disconnected', function (identity) {
-        assert.equal(identity.name, 'con2')
+      con1.clients.once('peer:disconnected', function (identity) {
+        assert.equal(identity, 'con2')
+        con3.clients.once('peer:disconnected', function (identity) {
+          assert.equal(identity, 'con2')
+        })
         done()
       })
 
@@ -131,12 +137,33 @@ describe('InterDB', () => {
     })
 
     it('should reconnec con2', function (done) {
-      con1.clients.on('peer:connected', function (identity) {
-        assert.equal(identity.name, 'con2')
-        done()
+      const plan = new Plan(3, done)
+
+      con1.clients.once('peer:connected', identity => {
+        assert.equal(identity, 'con2')
+        plan.ok(true)
       })
 
-      con2.stop()
+      con3.clients.once('peer:connected', identity => {
+        assert.equal(identity, 'con2')
+        plan.ok(true)
+      })
+
+      con2.once('ready', () => {
+        plan.ok(true)
+      })
+
+      con2.start({
+        namespace: 'test',
+        password: 'hardcoded-password',
+        path: dbPath2,
+        identity: 'con2'
+      })
+    }).timeout(4000)
+
+    it('should be connected', () => {
+      assert.equal(con2.clients.getPeers().length, 2)
+      assert.equal(con3.clients.getPeers().length, 2)
     })
   })
 })

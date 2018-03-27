@@ -72,7 +72,8 @@ describe('Sync', () => {
     })
 
     con2.once('ready', () => {
-      con2.once('synced', () => {
+      con2.once('synced', (client) => {
+        assert.equal(client.hostname, 'con1')
         assert.equal(con2.db.get('key'), 'value')
         done()
       })
@@ -101,7 +102,7 @@ describe('Sync', () => {
     })
 
     con3.once('ready', () => {
-      con3.once('synced', () => {
+      con3.once('synced', (client) => {
         assert.equal(con3.db.get('key'), 'value')
         assert.equal(con3.db.get('test'), true)
         plan.ok(true)

@@ -53,3 +53,11 @@ con.db.save(cb) // save changes (use if you modify con.db without API)
     data: {}
 }
 ```
+
+## Communication structure
+### Normal
+Host A <-> Host B <-> Host C
+ ^----------------------^
+
+### Problem
+Host A <-> Host B <-> Host C

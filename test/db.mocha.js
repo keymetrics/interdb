@@ -15,6 +15,7 @@ describe('Database', () => {
 
   after(() => {
     fs.unlinkSync(path)
+    fs.unlinkSync(path + '_backup')
   })
 
   describe('Data', () => {

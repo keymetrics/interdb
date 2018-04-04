@@ -17,8 +17,12 @@ describe('Sync', () => {
   before(() => {
     try {
       fs.unlinkSync(dbPath1)
+      fs.unlinkSync(dbPath1 + '.local' + '_backup')
+      fs.unlinkSync(dbPath1 + '_backup')
       fs.unlinkSync(dbPath2)
+      fs.unlinkSync(dbPath2 + '_backup')
       fs.unlinkSync(dbPath3)
+      fs.unlinkSync(dbPath3 + '_backup')
     } catch (e) {}
 
     con1 = new InterDB()
@@ -38,8 +42,12 @@ describe('Sync', () => {
       plan.ok(true)
     })
     fs.unlinkSync(dbPath1)
+    fs.unlinkSync(dbPath1 + '.local' + '_backup')
+    fs.unlinkSync(dbPath1 + '_backup')
     fs.unlinkSync(dbPath2)
+    fs.unlinkSync(dbPath2 + '_backup')
     fs.unlinkSync(dbPath3)
+    fs.unlinkSync(dbPath3 + '_backup')
   })
 
   it('Start con1', done => {
@@ -61,7 +69,7 @@ describe('Sync', () => {
     })
   })
 
-  it('con2 sync it database with con1', done => {
+  it('con2 sync it database', done => {
     con2.start({
       namespace: 'test',
       password: 'hardcoded-password',
@@ -73,7 +81,6 @@ describe('Sync', () => {
 
     con2.once('ready', () => {
       con2.once('synced', (client) => {
-        assert.equal(client.hostname, 'con1')
         assert.equal(con2.db.get('key'), 'value')
         done()
       })
@@ -153,7 +160,9 @@ describe('Sync', () => {
     })
   })
 
-  it('con 2 stop and resync with 2M data', done => {
+  it('con 2 stop and (con 2 + con 3) resync with 2M data', done => {
+    const plan = new Plan(2, done)
+
     con2.stop(() => {
       con1.db.put('2M', Buffer.alloc(2000000), () => {
         con2.start({
@@ -165,13 +174,18 @@ describe('Sync', () => {
           }
         })
 
+        con3.once('refreshed', () => {
+          assert.equal(con3.db.getShaSum(), con1.db.getShaSum())
+          plan.ok(true)
+        })
+
         con2.once('ready', () => {
           con2.once('synced', () => {
             assert.equal(con2.db.getShaSum(), con1.db.getShaSum())
-            done()
+            plan.ok(true)
           })
         })
       })
     })
-  })
+  }).timeout(10000)
 })

@@ -1,6 +1,6 @@
 {
   "name": "interdb",
-  "version": "0.3.2",
+  "version": "0.3.3",
   "description": "Shared and discoverable database services",
   "main": "index.js",
   "scripts": {
@@ -30,7 +30,7 @@
     "standard": "^10.0.3"
   },
   "dependencies": {
-    "debug": "*",
+    "debug": "^3.1.0",
     "synapsis": "^0.6.2"
   }
 }

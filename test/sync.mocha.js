@@ -3,6 +3,7 @@
 
 const assert = require('assert')
 const fs = require('fs')
+const crypto = require('crypto')
 const InterDB = require('..')
 const Plan = require('./plan')
 
@@ -17,7 +18,6 @@ describe('Sync', () => {
   before(() => {
     try {
       fs.unlinkSync(dbPath1)
-      fs.unlinkSync(dbPath1 + '.local' + '_backup')
       fs.unlinkSync(dbPath1 + '_backup')
       fs.unlinkSync(dbPath2)
       fs.unlinkSync(dbPath2 + '_backup')
@@ -42,7 +42,6 @@ describe('Sync', () => {
       plan.ok(true)
     })
     fs.unlinkSync(dbPath1)
-    fs.unlinkSync(dbPath1 + '.local' + '_backup')
     fs.unlinkSync(dbPath1 + '_backup')
     fs.unlinkSync(dbPath2)
     fs.unlinkSync(dbPath2 + '_backup')
@@ -160,11 +159,14 @@ describe('Sync', () => {
     })
   })
 
-  it('con 2 stop and (con 2 + con 3) resync with 2M data', done => {
+  it('con 2 stop and (con 2 + con 3) resync with 2M buffer', done => {
     const plan = new Plan(2, done)
 
     con2.stop(() => {
-      con1.db.put('2M', Buffer.alloc(2000000), () => {
+      let buffer = Buffer.alloc(2000000)
+      crypto.randomFillSync(buffer)
+
+      con1.db.put('2M', buffer, () => {
         con2.start({
           namespace: 'test',
           password: 'hardcoded-password',
@@ -176,12 +178,14 @@ describe('Sync', () => {
 
         con3.once('refreshed', () => {
           assert.equal(con3.db.getShaSum(), con1.db.getShaSum())
+          assert.equal(con3.db.get('2M').data.length, 2000000)
           plan.ok(true)
         })
 
         con2.once('ready', () => {
           con2.once('synced', () => {
             assert.equal(con2.db.getShaSum(), con1.db.getShaSum())
+            assert.equal(con2.db.get('2M').data.length, 2000000)
             plan.ok(true)
           })
         })

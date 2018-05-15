@@ -33,6 +33,13 @@ describe('InterDB', () => {
     fs.unlinkSync(dbPath3)
   })
 
+  after(() => {
+    fs.unlinkSync(`${dbPath1}_backup`)
+    fs.unlinkSync(`${dbPath1}.local_backup`)
+    fs.unlinkSync(`${dbPath2}_backup`)
+    fs.unlinkSync(`${dbPath3}_backup`)
+  })
+
   it('Start InterDB', done => {
     const plan = new Plan(5, done)
 
@@ -98,7 +105,7 @@ describe('InterDB', () => {
         assert.deepEqual(con3.db.get('test'), { test: { truc: 'bidule' } })
         plan.ok(true)
       })
-    })
+    }).timeout(4000)
 
     it('should node1 delete data and other node be synced with right data', done => {
       const plan = new Plan(2, done)
@@ -116,17 +123,23 @@ describe('InterDB', () => {
         assert.equal(con3.db.get('test'), undefined)
         plan.ok(true)
       })
-    })
+    }).timeout(4000)
   })
 
   describe('handle disconnection and resyncing', function () {
     it('should disconnect con2', function (done) {
+      const plan = new Plan(2, done)
+
       con1.clients.once('peer:disconnected', function (identity) {
+        console.log('con1', identity)
         assert.equal(identity, 'con2')
-        con3.clients.once('peer:disconnected', function (identity) {
-          assert.equal(identity, 'con2')
-        })
-        done()
+        plan.ok(true)
+      })
+
+      con3.clients.once('peer:disconnected', function (identity) {
+        console.log('con3', identity)
+        assert.equal(identity, 'con2')
+        plan.ok(true)
       })
 
       con2.stop()
@@ -140,16 +153,19 @@ describe('InterDB', () => {
       const plan = new Plan(3, done)
 
       con1.clients.once('peer:connected', identity => {
+        console.log('con1', identity)
         assert.equal(identity, 'con2')
         plan.ok(true)
       })
 
       con3.clients.once('peer:connected', identity => {
+        console.log('con3', identity)
         assert.equal(identity, 'con2')
         plan.ok(true)
       })
 
       con2.once('ready', () => {
+        console.log('ready')
         plan.ok(true)
       })
 

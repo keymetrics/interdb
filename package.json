@@ -27,9 +27,11 @@
   "homepage": "https://github.com/keymetrics-envision/interdb#readme",
   "devDependencies": {
     "mocha": "^4.0.0",
+    "segfault-handler": "^1.0.1",
     "standard": "^10.0.3"
   },
   "dependencies": {
+    "axios": "^0.18.0",
     "debug": "^3.1.0",
     "synapsis": "^0.6.2"
   }

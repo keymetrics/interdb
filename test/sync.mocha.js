@@ -1,6 +1,9 @@
 /* eslint-env mocha */
 'use strict'
 
+const SegfaultHandler = require('segfault-handler')
+SegfaultHandler.registerHandler('crash.log')
+
 const assert = require('assert')
 const fs = require('fs')
 const crypto = require('crypto')

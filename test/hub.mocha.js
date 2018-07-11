@@ -11,6 +11,8 @@ describe('Test discover hub', () => {
     hub: process.env.INTERDB_HUB
   }
 
+  console.log(inter.conf.namespace)
+
   it('should get 0 peers with hub', done => {
     inter._getAndInjectFromHub((err, hosts) => {
       assert.equal(err, null)

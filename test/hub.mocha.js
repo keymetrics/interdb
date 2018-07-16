@@ -11,6 +11,7 @@ describe('Test discover hub', () => {
     hub: process.env.INTERDB_HUB
   }
 
+  console.log(`hub: ${inter.conf.hub}`)
   console.log(inter.conf.namespace)
 
   it('should get 0 peers with hub', done => {

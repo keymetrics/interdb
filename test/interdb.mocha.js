@@ -41,7 +41,7 @@ describe('InterDB', () => {
   })
 
   it('Start InterDB', done => {
-    const plan = new Plan(5, done)
+    const plan = new Plan(4, done)
 
     con1.start({
       namespace: 'test',
@@ -50,12 +50,27 @@ describe('InterDB', () => {
       localPath: `${dbPath1}.local`,
       identity: 'con1'
     })
+
+    con1.once('ready', () => {
+      plan.ok(true)
+    })
+
+    con1.clients.once('peer:connected', () => {
+      // Get called twice because of 2 foreigners node
+      plan.ok(true)
+    })
+
     con2.start({
       namespace: 'test',
       password: 'hardcoded-password',
       path: dbPath2,
       identity: 'con2'
     })
+
+    con2.once('ready', () => {
+      plan.ok(true)
+    })
+
     con3.start({
       namespace: 'test',
       password: 'hardcoded-password',
@@ -63,19 +78,7 @@ describe('InterDB', () => {
       identity: 'con3'
     })
 
-    con1.once('ready', () => {
-      plan.ok(true)
-    })
-
-    con2.once('ready', () => {
-      plan.ok(true)
-    })
-
     con3.once('ready', () => {
-      plan.ok(true)
-    })
-
-    con1.clients.on('peer:connected', () => {
       plan.ok(true)
     })
   })
@@ -92,10 +95,6 @@ describe('InterDB', () => {
     it('should node1 put data and other node be synced with right data', done => {
       const plan = new Plan(2, done)
 
-      con1.db.put('test', { test: { truc: 'bidule' } }, err => {
-        assert.equal(err, null)
-      })
-
       con2.once('refreshed', () => {
         assert.deepEqual(con2.db.get('test'), { test: { truc: 'bidule' } })
         plan.ok(true)
@@ -105,14 +104,14 @@ describe('InterDB', () => {
         assert.deepEqual(con3.db.get('test'), { test: { truc: 'bidule' } })
         plan.ok(true)
       })
+
+      con1.db.put('test', { test: { truc: 'bidule' } }, err => {
+        assert.equal(err, null)
+      })
     }).timeout(4000)
 
     it('should node1 delete data and other node be synced with right data', done => {
       const plan = new Plan(2, done)
-
-      con1.db.del('test', err => {
-        assert.equal(err, null)
-      })
 
       con2.once('refreshed', () => {
         assert.equal(con2.db.get('test'), undefined)
@@ -123,6 +122,11 @@ describe('InterDB', () => {
         assert.equal(con3.db.get('test'), undefined)
         plan.ok(true)
       })
+
+      con1.db.del('test', err => {
+        assert.equal(err, null)
+      })
+
     }).timeout(4000)
   })
 
@@ -145,21 +149,21 @@ describe('InterDB', () => {
       con2.stop()
     })
 
-    it('should delete con2 database', function () {
-      fs.unlinkSync(dbPath2)
-    })
+    // it('should delete con2 database', function () {
+    //   fs.unlinkSync(dbPath2)
+    // })
 
     it('should reconnec con2', function (done) {
       const plan = new Plan(3, done)
 
       con1.clients.once('peer:connected', identity => {
-        console.log('con1', identity)
+        console.log('Client #1 discovered new node:', identity)
         assert.equal(identity, 'con2')
         plan.ok(true)
       })
 
       con3.clients.once('peer:connected', identity => {
-        console.log('con3', identity)
+        console.log('Client #3 discovered new node:', identity)
         assert.equal(identity, 'con2')
         plan.ok(true)
       })
@@ -175,7 +179,7 @@ describe('InterDB', () => {
         path: dbPath2,
         identity: 'con2'
       })
-    }).timeout(4000)
+    }).timeout(10000)
 
     it('should be connected', () => {
       assert.equal(con2.clients.getPeers().length, 2)

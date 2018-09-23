@@ -4,7 +4,7 @@
 const InterDB = require('..')
 const assert = require('assert')
 
-describe('Test discover hub', () => {
+describe.skip('Test discover hub', () => {
   let inter = new InterDB()
   inter.conf = {
     namespace: `mocha_test_${Date.now()}`,
